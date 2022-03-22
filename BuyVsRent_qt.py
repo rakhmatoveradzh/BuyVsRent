@@ -69,13 +69,18 @@ class MyWindow(QMainWindow):
         self.home_expenses=self.total_monthly*self.years*12
 
         '''calculate annual rent expenses considering rent increase and sum all and remaining mortgage amount'''
-        self.rent_expense=self.rent
-        for i in range(self.years+1):
-            if i==0:
-                rent=self.rent
-                self.mortgage_remaining=self.loan_amount
-                self.investment_return=self.downpayment_value
-                continue
+        self.mortgage_remaining=self.loan_amount
+        self.investment_return=self.downpayment_value
+        rent=self.rent*12
+        year=1
+        self.rent_expense=0
+        while year <= self.years:
+            # if year==1:
+            #     rent=self.rent*12
+            #     self.mortgage_remaining=self.loan_amount
+            #     self.investment_return=self.downpayment_value
+            #     year+=1
+            #     continue
             self.mortgage_remaining=self.mortgage_remaining*(1+self.interest)-self.mortgage*12
             
             '''Investment return on downpayment and contribution equal to the 
@@ -83,14 +88,19 @@ class MyWindow(QMainWindow):
             if rent is less than mortgage plus other home expenses'''
             if self.rent<self.total_monthly:
                 self.investment_return=(self.investment_return+(self.total_monthly-self.rent)*12)*(1+self.investment)
-            
-            rent=rent+rent*self.rent_increase
+
+            if year==1:
+                rent=self.rent*12
+            else:    
+                rent=rent+rent*self.rent_increase
             self.rent_expense+=rent
+            year+=1
+
         if self.mortgage_remaining<0:
             self.mortgage_remaining=0
 
-        self.home_profit=self.home_appreciation-self.mortgage_remaining-self.downpayment_value
-
+        self.home_profit=self.home_appreciation-self.mortgage_remaining
+        self.investment_profit=int(self.investment_return)
     def button_clicked(self):
         self.get_values()
         self.calculations()
@@ -111,7 +121,7 @@ class MyWindow(QMainWindow):
 
         f'Investment return: {int(self.investment_return)}\n'
         f'Rent expenses: {int(self.rent_expense)}\n'
-        f'Investment profit: {int(self.investment_return-self.rent_expense-self.downpayment_value)}')
+        f'Investment profit: {self.investment_profit}')
 
         # self.update()
     
