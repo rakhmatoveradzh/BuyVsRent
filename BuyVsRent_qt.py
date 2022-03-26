@@ -1,19 +1,14 @@
-#!/usr/bin/env python3
+#!/Users/eradzhrakhmatov/pyqtenv/bin/ python3
 
-# Filename: pycalc.py
 
 """Command to translate .ui to .py file: pyuic5  window.ui >window.py """
 
 import sys
 
-from PySide6.QtWidgets import QApplication, QLabel
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel
+from PySide6.QtWidgets import QMainWindow
 
 import window
-
-
-
 
 class MyWindow(QMainWindow):
     def __init__(self):
@@ -40,7 +35,6 @@ class MyWindow(QMainWindow):
         self.insurance=float(self.ui.insurance_doubleSpinBox.text()[:-1])/100
         self.maintenance=float(self.ui.maintenance_doubleSpinBox.text()[:-1])/100
         self.property_growth=float(self.ui.property_growth_doubleSpinBox.text()[:-1])/100
-        self.closing_cost=float(self.ui.closing_cost_doubleSpinBox.text()[:-1])/100
         self.rent=int(self.ui.rent_lineEdit.text())
         self.rent_increase=float(self.ui.rent_increase_doubleSpinBox.text()[:-1])/100
         self.investment=float(self.ui.investment_doubleSpinBox.text()[:-1])/100
@@ -58,7 +52,7 @@ class MyWindow(QMainWindow):
         self.insurance_cost=int(self.property*self.insurance/12)
         self.maintenance_cost=int(self.property*self.maintenance/12)
         self.total_payment=self.mortgage*self.amortization*12
-        self.total_monthly=int(self.mortgage+self.property_tax_cost+self.insurance_cost+self.maintenance)
+        self.total_monthly=int(self.mortgage+self.property_tax_cost+self.insurance_cost+self.maintenance_cost)
 
         '''Appreciation=P(1+r/n)^nt, r - interest rate, n - number of times interest is applied in a year, n - number of years'''
         self.home_appreciation=int(self.property*(1+self.property_growth)**self.years)
@@ -101,6 +95,11 @@ class MyWindow(QMainWindow):
 
         self.home_profit=self.home_appreciation-self.mortgage_remaining
         self.investment_profit=int(self.investment_return)
+        if self.home_profit>self.investment_profit:
+            self.result=f"Buying home is better."
+        else:
+            self.result=f"Renting is better"
+
     def button_clicked(self):
         self.get_values()
         self.calculations()
@@ -121,7 +120,8 @@ class MyWindow(QMainWindow):
 
         f'Investment return: {int(self.investment_return)}\n'
         f'Rent expenses: {int(self.rent_expense)}\n'
-        f'Investment profit: {self.investment_profit}')
+        f'Investment profit: {self.investment_profit}\n'
+        f"{self.result}")
 
         # self.update()
     
