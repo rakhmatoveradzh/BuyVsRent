@@ -1,4 +1,4 @@
-#!/Users/eradzhrakhmatov/pyqtenv/bin/ python3
+#!/usr/bin/ python3
 
 
 """Command to translate .ui to .py file: pyuic5  window.ui >window.py """
@@ -20,7 +20,9 @@ class MyWindow(QMainWindow):
         # self.get_values()
         self.ui.result_label.adjustSize()
 
-        self.button_clicked()
+        #self.button_clicked()
+        # self.ui.result_label.adjustSize()
+
         # self.initUI()
 
     def editUI(self):
@@ -57,9 +59,6 @@ class MyWindow(QMainWindow):
         '''Appreciation=P(1+r/n)^nt, r - interest rate, n - number of times interest is applied in a year, n - number of years'''
         self.home_appreciation=int(self.property*(1+self.property_growth)**self.years)
 
-        
-        # self.mortgage_remaining=int(self.loan_amount*(1+self.interest)**self.years-self.mortgage*self.years*12)
-        # self.investment_return=int(self.downpayment_value*(1+self.investment)**self.years)
         self.home_expenses=self.total_monthly*self.years*12
 
         '''calculate annual rent expenses considering rent increase and sum all and remaining mortgage amount'''
@@ -104,7 +103,7 @@ class MyWindow(QMainWindow):
         self.get_values()
         self.calculations()
         self.ui.result_label.adjustSize()
-        self.ui.result_label.setText(f'Results: \nMortgage: {self.mortgage}\n'
+        self.ui.result_label.setText(f'Result: \nMortgage: {self.mortgage}\n'
         f'Property tax: {self.property_tax_cost}\n'
         f'Insurance cost: {self.insurance_cost}\n'
         f'Maintenance cost: {self.maintenance_cost}\n'
@@ -123,22 +122,6 @@ class MyWindow(QMainWindow):
         f'Investment profit: {self.investment_profit}\n'
         f"{self.result}")
 
-        # self.update()
-    
-    # def update(self):
-    #     self.label.adjustSize()
-
-    # def initUI(self):
-    #     self.setGeometry(200, 200, 300, 300)
-    #     self.setWindowTitle("Tech With Tim")
-
-    #     self.label = QtWidgets.QLabel(self)
-    #     self.label.setText("my first label!")
-    #     self.label.move(50,50)
-
-    #     self.b1 = QtWidgets.QPushButton(self)
-    #     self.b1.setText("click me!")
-    #     self.b1.clicked.connect(self.button_clicked)
 
 def create_window():
     app = QtWidgets.QApplication(sys.argv)
@@ -151,19 +134,6 @@ def create_window():
 
 def main():
     create_window()
-    # app = QApplication(sys.argv)
-    # win = QMainWindow()
-    # win.setGeometry(200,200,300,300) # sets the windows x, y, width, height
-    # win.setWindowTitle("My first window!") # setting the window title
-    # label = QLabel(win)
-    # label.setText("my first label")
-    # label.move(50, 50)  # x, y from top left hand corner.
-
-    # b1 = QtWidgets.QPushButton(win)
-    # b1.setText("click me")
-    #b1.move(100,100) to move the button
-    # win.show()
-    # sys.exit(app.exec_())
 
 if __name__ == '__main__':
     main()
